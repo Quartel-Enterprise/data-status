@@ -15,8 +15,6 @@ dependencies {
 ## Usage
 
 ```kotlin
-import software.quare.data_status.DataStatus
-
 // Create a loaded state
 val loadedData = DataStatus.Loaded("some data")
 
@@ -80,7 +78,12 @@ val dataList = nameStatuses.toLoadedData() // List<String>
 ```kotlin
 // Check if a state is loading
 val isLoading = userStatus.isLoading() // false
-val loadingState = getLoadingData() // DataStatus.Loading
+```
+
+### Generate a list of loading states
+```kotlin
+// Create a list of loading states
+val loadingList = DataStatusUtils.generateLoadingList(5)
 ```
 
 ## License
