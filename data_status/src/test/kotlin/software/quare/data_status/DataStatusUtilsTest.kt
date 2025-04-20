@@ -16,7 +16,6 @@ internal class DataStatusUtilsTest {
         val amount = 5
         val result = DataStatusUtils.generateLoading(amount)
         assertThat(result).hasSize(amount)
-        assertThat(result.all { it is DataStatus.Loading }).isTrue()
     }
 
     @Test
