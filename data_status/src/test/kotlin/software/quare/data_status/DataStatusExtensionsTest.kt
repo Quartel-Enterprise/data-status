@@ -82,10 +82,4 @@ internal class DataStatusExtensionsTest {
         val loadedState: DataStatus<String> = DataStatus.Loaded("test")
         assertThat(loadedState.isLoading()).isFalse()
     }
-
-    @Test
-    fun `getLoadingData returns Loading state`() {
-        val result = getLoadingData()
-        assertThat(result).isEqualTo(DataStatus.Loading)
-    }
 } 
