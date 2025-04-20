@@ -73,13 +73,6 @@ fun <T> List<DataStatus<T>>.toLoadedData(): List<T> = mapNotNull { it.toLoadedDa
 fun <T> List<T>.toLoadedStatus(): List<DataStatus.Loaded<T>> = map { it.toLoadedStatus() }
 
 /**
- * Creates a new instance of [DataStatus.Loading] for the given type.
- *
- * @return A loading shimmer state.
- */
-fun getLoadingData(): DataStatus.Loading = DataStatus.Loading
-
-/**
  * Checks whether the shimmer state represents a loading operation.
  *
  * @return `true` if the current state is [DataStatus.Loading], otherwise `false`.
