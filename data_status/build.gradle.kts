@@ -1,10 +1,9 @@
+import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("jvm") version "2.1.20"
-    id("org.jetbrains.dokka") version "1.9.20"
-    `maven-publish`
-    signing
+    id("com.vanniktech.maven.publish") version "0.31.0"
 }
 
 group = "com.quare"
@@ -43,67 +42,39 @@ java {
     withSourcesJar()
 }
 
-// Use Dokka's built-in javadocJar task
-tasks.dokkaHtml {
-    outputDirectory.set(layout.buildDirectory.dir("dokka"))
-}
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
 
-tasks.register<Jar>("javadocJar") {
-    dependsOn(tasks.dokkaHtml)
-    archiveClassifier.set("javadoc")
-    from(tasks.dokkaHtml.flatMap { it.outputDirectory })
-}
+    signAllPublications()
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-            artifact(tasks["javadocJar"])
+    coordinates(group.toString(), "data-status", version.toString())
 
-            pom {
-                name.set("Data Status")
-                description.set("A Kotlin library for handling data loading states in a type-safe way")
-                url.set("https://github.com/Quartel-Enterprise/data-status")
+    pom {
+        name = "Data Status"
+        description = "A Kotlin library for handling data loading states in a type-safe way."
+        inceptionYear = "2025"
+        url = "https://github.com/Quartel-Enterprise/data-status"
 
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
-
-                developers {
-                    developer {
-                        id.set("Quartel-Enterprise")
-                        name.set("Quartel Enterprise")
-                        email.set("quare.software@gmail.com")
-                    }
-                }
-
-                scm {
-                    connection.set("scm:git:github.com/Quartel-Enterprise/data-status.git")
-                    developerConnection.set("scm:git:ssh://github.com/Quartel-Enterprise/data-status.git")
-                    url.set("https://github.com/Quartel-Enterprise/data-status/tree/main")
-                }
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "https://www.apache.org/licenses/LICENSE-2.0.txt"
             }
         }
-    }
 
-    repositories {
-        maven {
-            name = "Central"
-            url = uri("https://central.sonatype.com/artifact/upload")
-            credentials {
-                username = System.getenv("CENTRAL_USERNAME")
-                password = System.getenv("CENTRAL_TOKEN")
+        developers {
+            developer {
+                id.set("Quartel-Enterprise")
+                name.set("Quartel Enterprise")
+                email.set("quare.software@gmail.com")
             }
         }
-    }
-}
 
-signing {
-    val signingKey = System.getenv("GPG_PRIVATE_KEY")
-    val signingPassword = System.getenv("GPG_PASSPHRASE")
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    sign(publishing.publications["maven"])
+        scm {
+            connection.set("scm:git:github.com/Quartel-Enterprise/data-status.git")
+            developerConnection.set("scm:git:ssh://github.com/Quartel-Enterprise/data-status.git")
+            url.set("https://github.com/Quartel-Enterprise/data-status/tree/main")
+        }
+    }
 }
