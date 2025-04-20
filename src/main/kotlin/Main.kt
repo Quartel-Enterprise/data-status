@@ -1,7 +1,7 @@
 package com.quare
 
-import com.quare.data_status.DataStatus
-import com.quare.data_status.getLoadingData
+import software.quare.data_status.DataStatus
+import software.quare.data_status.getLoadingData
 import java.util.UUID
 
 fun main() {

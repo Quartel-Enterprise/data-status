@@ -1,4 +1,4 @@
-package com.quare.data_status
+package software.quare.data_status
 
 /**
  * Represents the status of a data-loading operation.

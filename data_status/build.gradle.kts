@@ -6,7 +6,7 @@ plugins {
     id("com.vanniktech.maven.publish") version "0.31.0"
 }
 
-group = "com.quare"
+group = "software.quare"
 version = "0.1.0"
 
 repositories {

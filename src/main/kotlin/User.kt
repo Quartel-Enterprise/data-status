@@ -1,6 +1,6 @@
 package com.quare
 
-import com.quare.data_status.DataStatus
+import software.quare.data_status.DataStatus
 
 internal data class User(
     val id: String,

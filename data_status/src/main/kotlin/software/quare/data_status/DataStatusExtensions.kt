@@ -1,4 +1,4 @@
-package com.quare.data_status
+package software.quare.data_status
 
 /**
  * Attempts to cast the current shimmer state to [DataStatus.Loaded] and returns it,

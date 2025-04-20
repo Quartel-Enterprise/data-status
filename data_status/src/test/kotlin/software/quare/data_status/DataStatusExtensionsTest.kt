@@ -1,4 +1,4 @@
-package com.quare.data_status
+package software.quare.data_status
 
 import com.google.common.truth.Truth.assertThat
 import kotlin.test.Test
