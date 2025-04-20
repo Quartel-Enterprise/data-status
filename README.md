@@ -8,14 +8,14 @@ Add the following to your `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.quare:data_status:0.1.0")
+    implementation("software.quare:data_status:0.1.0")
 }
 ```
 
 ## Usage
 
 ```kotlin
-import com.quare.data_status.DataStatus
+import software.quare.data_status.DataStatus
 
 // Create a loaded state
 val loadedData = DataStatus.Loaded("some data")
@@ -40,17 +40,48 @@ val user = User(
 )
 ```
 
-## Publishing New Versions
+## Extensions
 
-To publish a new version to Maven Central:
+DataStatus provides several useful extensions to make working with loading states more convenient:
 
-1. Update the version in `data_status/build.gradle.kts`
-2. Create and push a new tag with the version number:
-   ```bash
-   git tag v0.1.0
-   git push origin v0.1.0
-   ```
-3. The GitHub Actions workflow will automatically build and publish the package
+### Type Conversion
+```kotlin
+// Convert a value to a loaded state
+val name = "John"
+val nameStatus = name.toLoadedStatus() // DataStatus.Loaded("John")
+
+// Extract data from a loaded state
+val data = nameStatus.toLoadedData() // "John"
+val loadedInfo = nameStatus.toLoadedInformation() // DataStatus.Loaded("John")
+```
+
+### Transformation
+```kotlin
+// Transform loaded data while preserving the loading state
+data class User(val name: String, val age: Int)
+val userStatus = DataStatus.Loaded(User("John", 30))
+
+// Extract specific fields
+val nameStatus = userStatus.mapToStatus { name } // DataStatus.Loaded("John")
+val ageStatus = userStatus.mapToStatus { age } // DataStatus.Loaded(30)
+```
+
+### List Operations
+```kotlin
+// Convert a list of values to loaded states
+val names = listOf("John", "Jane")
+val nameStatuses = names.toLoadedStatus() // List<DataStatus.Loaded<String>>
+
+// Extract data from a list of states
+val dataList = nameStatuses.toLoadedData() // List<String>
+```
+
+### State Checking
+```kotlin
+// Check if a state is loading
+val isLoading = userStatus.isLoading() // false
+val loadingState = getLoadingData() // DataStatus.Loading
+```
 
 ## License
 
