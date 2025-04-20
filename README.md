@@ -85,7 +85,7 @@ val isLoading = userStatus.isLoading() // false
 ### Generate a list of loading states
 ```kotlin
 // Create a list of loading states
-val loadingList = DataStatusUtils.generateLoadingList(5)
+val loadingList = DataStatusUtils.generateLoading(5)
 ```
 
 ## License
