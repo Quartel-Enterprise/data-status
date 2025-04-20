@@ -2,13 +2,15 @@
 
 A Kotlin library for handling data loading states in a type-safe way.
 
+A good use case for applying it is when you have parts of your model that may frequently have a loading state, such as when rendering a shimmer effect, for example.
+
 ## Installation
 
 Add the following to your `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("software.quare:data_status:0.1.0")
+    implementation("software.quare:data-status:0.2.0")
 }
 ```
 
