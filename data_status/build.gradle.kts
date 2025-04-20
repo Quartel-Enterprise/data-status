@@ -59,19 +59,19 @@ publishing {
         create<MavenPublication>("maven") {
             from(components["java"])
             artifact(tasks["javadocJar"])
-            
+
             pom {
                 name.set("Data Status")
                 description.set("A Kotlin library for handling data loading states in a type-safe way")
                 url.set("https://github.com/Quartel-Enterprise/data-status")
-                
+
                 licenses {
                     license {
                         name.set("MIT License")
                         url.set("https://opensource.org/licenses/MIT")
                     }
                 }
-                
+
                 developers {
                     developer {
                         id.set("Quartel-Enterprise")
@@ -79,7 +79,7 @@ publishing {
                         email.set("quare.software@gmail.com")
                     }
                 }
-                
+
                 scm {
                     connection.set("scm:git:github.com/Quartel-Enterprise/data-status.git")
                     developerConnection.set("scm:git:ssh://github.com/Quartel-Enterprise/data-status.git")
@@ -88,14 +88,11 @@ publishing {
             }
         }
     }
-    
+
     repositories {
         maven {
-            name = "OSSRH"
-            val releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            val snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-            url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
-            
+            name = "Central"
+            url = uri("https://central.sonatype.com/artifact/upload")
             credentials {
                 username = System.getenv("CENTRAL_USERNAME")
                 password = System.getenv("CENTRAL_TOKEN")
