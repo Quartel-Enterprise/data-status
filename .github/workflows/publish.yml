@@ -25,35 +25,22 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
         
-      - name: Generate GPG Key
-        id: gpg
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          
+      - name: Get GPG key
         run: |
-          cat > key-info <<EOF
-          %echo Generating a basic OpenPGP key
-          Key-Type: RSA
-          Key-Length: 2048
-          Subkey-Type: RSA
-          Subkey-Length: 2048
-          Name-Real: Quartel Enterprise
-          Name-Email: quare.software@gmail.com
-          Expire-Date: 0
-          %no-protection
-          %commit
-          %echo done
-          EOF
-          
-          gpg --batch --gen-key key-info
-          KEY_ID=$(gpg --list-signatures --with-colons | grep 'sig' | head -n 1 | cut -d':' -f5)
-          echo "key_id=$KEY_ID" >> "$GITHUB_OUTPUT"
-          
-          # Export the keys
-          gpg --armor --export-secret-keys $KEY_ID > private.key
-          gpg --armor --export $KEY_ID > public.key
+          echo "SIGNING_KEY_ID=$(gpg --list-signatures --with-colons | grep 'sig' | head -n 1 | cut -d':' -f5)" >> $GITHUB_ENV
+          echo "SIGNING_KEY=$(gpg --armor --export-secret-keys)" >> $GITHUB_ENV
           
       - name: Publish to Maven Central
         run: ./gradlew publish
         env:
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           CENTRAL_TOKEN: ${{ secrets.CENTRAL_TOKEN }}
-          SIGNING_KEY_ID: ${{ steps.gpg.outputs.key_id }}
-          SIGNING_SECRET_KEY_RING_FILE: ${{ github.workspace }}/private.key 
+          SIGNING_KEY_ID: ${{ env.SIGNING_KEY_ID }}
+          SIGNING_KEY: ${{ env.SIGNING_KEY }}
+          SIGNING_PASSWORD: ${{ secrets.GPG_PASSPHRASE }} 
