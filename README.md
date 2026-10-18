@@ -1,5 +1,12 @@
 # Data Status
 
+> [!WARNING]
+> **This library is archived and no longer maintained.** It's replaced by
+> [loadable-kt](https://github.com/Quartel-Enterprise/loadable-kt) (`software.quare:loadable`), which is Kotlin
+> Multiplatform and covers everything data-status did. Its README has a
+> [migration table](https://github.com/Quartel-Enterprise/loadable-kt#migrating-from-softwarequaredata-status).
+> Published data-status versions stay available on Maven Central.
+
 A Kotlin library for handling data loading states in a type-safe way.
 
 A good use case for applying it is when you have parts of your model that may frequently have a loading state, such as when rendering a shimmer effect, for example.
